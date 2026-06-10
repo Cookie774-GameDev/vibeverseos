@@ -279,7 +279,7 @@
     'message me a reminder':
       "Messaging can be used for reminders, updates, and assistant-triggered notifications.",
     'explain vibespace':
-      "VibeSpace is designed to be your AI command center across chat, voice, tools, and automation.",
+      "VibeSpace is a cozy desktop app that keeps chat, calls, messages, your tools, and the busywork together in one calm place.",
   };
 
   function keywordReply(text) {
