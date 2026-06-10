@@ -1,5 +1,5 @@
 /* ============================================================================
-   VibeSpace — vibeverseos.com landing interactions
+   VibeSpace — vibespaceos.com landing interactions
    Plain vanilla JS, no frameworks. Loaded with `defer`.
    Modules: nav · scroll progress · cursor glow · scroll-reveal (staggered)
             · active-link · orb parallax · card tilt+spotlight · count-up
