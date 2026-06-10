@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================= -->
+  <!--  Jarvis One — landing page for vibeverseos.com                -->
+  <!--  Static HTML/CSS/JS. Open index.html directly to preview.     -->
+  <!--  Edit copy freely. Look for <!-- EDIT ... --> markers.        -->
+  <!-- ============================================================= -->
+
+  <title>Jarvis One — Your personal AI command center | VibeVerseOS</title>
+  <meta name="description" content="Meet Jarvis One — a cozy AI desktop assistant. Chat, call, message, run local models, connect plugins, and automate your workflow from one calm command center. Built by VibeVerseOS." />
+  <meta name="theme-color" content="#0d0a14" />
+  <meta name="author" content="VibeVerseOS" />
+
+  <!-- Open Graph / social share (swap og-cover when ready) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Jarvis One — Your personal AI command center" />
+  <meta property="og:description" content="Chat, call, automate, and control your digital workspace from one cozy AI-powered desktop assistant." />
+  <meta property="og:url" content="https://vibeverseos.com" />
+  <!-- EDIT: add a real share image at assets/images/og-cover.png then uncomment -->
+  <!-- <meta property="og:image" content="https://vibeverseos.com/assets/images/og-cover.png" /> -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jarvis One — Your personal AI command center" />
+  <meta name="twitter:description" content="A cozy AI workspace built for creators, builders, and everyday power users." />
+
+  <!-- Favicon: inline SVG so no external file is required -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='4' x2='60' y2='60'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='55%25' stop-color='%238b5cf6'/%3E%3Cstop offset='100%25' stop-color='%2360a5fa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='60' height='60' rx='16' fill='url(%23g)'/%3E%3Cpath d='M40 16 L40 38 a10 10 0 0 1 -20 0' stroke='white' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" />
+
+  <!-- Fonts: match the real Jarvis One app (Plus Jakarta Sans + Fraunces + JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== Animated background glow blobs (decorative) ===== -->
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb--violet"></span>
+    <span class="orb orb--purple"></span>
+    <span class="orb orb--pink"></span>
+    <span class="orb orb--blue"></span>
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- ============================ NAVBAR ============================ -->
+  <header class="nav" id="top">
+    <nav class="nav__inner" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Jarvis One home">
+        <!-- EDIT LOGO: replace this inline SVG with <img src="assets/images/logo.png"> if desired -->
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="34" height="34" fill="none">
+            <defs>
+              <linearGradient id="navMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#a855f7" />
+                <stop offset="55%" stop-color="#8b5cf6" />
+                <stop offset="100%" stop-color="#60a5fa" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#navMark)" />
+            <path d="M40 16 L40 38 a10 10 0 0 1 -20 0" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">Jarvis One</span>
+          <span class="brand__badge">VibeVerseOS</span>
+        </span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav__links" id="navLinks">
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#chat">Try Jarvis</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a href="#download" class="btn btn--primary btn--sm nav__cta">Download</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============================ HERO ============================ -->
+    <section class="hero" id="home">
+      <div class="hero__content reveal">
+        <span class="pill pill--soft hero__eyebrow">
+          <span class="dot dot--live"></span> Now in early access · v0.1.28
+        </span>
+        <h1 class="hero__title">
+          Meet <span class="grad-text">Jarvis One</span> —<br />
+          your personal AI command center.
+        </h1>
+        <p class="hero__sub">
+          Chat, call, message, automate, and control your digital workspace from one
+          cozy AI-powered desktop assistant. Every model, agent, voice, and task — in
+          one calm window.
+        </p>
+
+        <div class="hero__actions">
+          <!-- EDIT DOWNLOAD LINK (primary): this points at the current real GitHub release.
+               When you cut a new version, update the href below (and the one in #download). -->
+          <a class="btn btn--primary btn--lg" href="https://github.com/Cookie774-GameDev/Jarivs-One/releases/download/v0.1.28/Jarvis-One-0.1.28-Windows-x64.exe">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download Jarvis One
+          </a>
+          <a class="btn btn--ghost btn--lg" href="#demo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>
+            Watch Demo
+          </a>
+        </div>
+
+        <div class="hero__badges">
+          <span class="chip"><span class="dot dot--live"></span> Built for Windows</span>
+          <span class="chip">Private-first local workflow</span>
+          <span class="chip">BYOK · 21 model providers</span>
+        </div>
+      </div>
+
+      <!-- Hero visual: app mockup card -->
+      <div class="hero__visual reveal" aria-hidden="true">
+        <!-- EDIT HERO IMAGE: to use a real screenshot, uncomment the line below and
+             remove (or keep behind) the mockup markup. -->
+        <!-- <img class="hero__shot" src="assets/images/hero-preview.png" alt="Jarvis One desktop app" /> -->
+
+        <div class="mockup glass">
+          <div class="mockup__bar">
+            <span class="traffic"><i></i><i></i><i></i></span>
+            <span class="mockup__title">Jarvis One — Workspace</span>
+            <span class="mockup__pills">
+              <span class="pill pill--mono"><span class="dot dot--live"></span> Online</span>
+              <span class="pill pill--mono"><span class="dot dot--blue"></span> Voice Ready</span>
+              <span class="pill pill--mono"><span class="dot dot--pink"></span> Local Models</span>
+            </span>
+          </div>
+
+          <div class="mockup__body">
+            <aside class="mockup__rail">
+              <span class="rail__item rail__item--active">💬 Chat</span>
+              <span class="rail__item">📞 Calls</span>
+              <span class="rail__item">⚙️ Agents</span>
+              <span class="rail__item">⌨️ Terminal</span>
+              <span class="rail__item">🗂️ Tasks</span>
+              <span class="rail__item">🧠 Memory</span>
+            </aside>
+
+            <div class="mockup__main">
+              <div class="bubble bubble--ai">
+                <span class="bubble__who">Jarvis</span>
+                Good to see you. Workspace synced — 3 tasks due today and your local model is warm.
+              </div>
+              <div class="bubble bubble--me">
+                Draft the launch checklist and call me at 9am to review.
+              </div>
+              <div class="bubble bubble--ai">
+                <span class="bubble__who">Jarvis</span>
+                On it. Checklist drafted ✓ · Reminder call scheduled for 9:00 AM ✓
+              </div>
+
+              <div class="mockup__cards">
+                <div class="mini-card">
+                  <span class="mini-card__label">Voice</span>
+                  <span class="mini-card__value">Connected</span>
+                  <span class="wave"><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card__label">Model</span>
+                  <span class="mini-card__value">Ollama · local</span>
+                </div>
+                <div class="mini-card">
+                  <span class="mini-card__label">Agents</span>
+                  <span class="mini-card__value">Council · 3 active</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- floating accent cards -->
+        <div class="float-card float-card--1 glass">
+          <span class="dot dot--live"></span> Call scheduled · 9:00 AM
+        </div>
+        <div class="float-card float-card--2 glass">
+          ⚡ Task automated · launch checklist
+        </div>
+      </div>
+    </section>
+
+    <!-- marquee of trust signals -->
+    <section class="strip reveal" aria-label="At a glance">
+      <div class="strip__inner">
+        <span>🔒 Local-first &amp; private</span>
+        <span>🖥️ Windows · macOS · Linux</span>
+        <span>🧩 Plugin system</span>
+        <span>🎙️ Voice calling</span>
+        <span>🤖 21 model providers</span>
+        <span>🧠 Persistent memory</span>
+      </div>
+    </section>
+
+    <!-- ========================== FEATURES ========================== -->
+    <section class="section" id="features">
+      <div class="section__head reveal">
+        <span class="pill pill--soft">Features</span>
+        <h2 class="section__title">One assistant for your whole workflow</h2>
+        <p class="section__lead">
+          Jarvis One brings chat, voice, local models, plugins, and automation into a
+          single calm workspace — so you stop juggling a dozen tabs and tools.
+        </p>
+      </div>
+
+      <div class="grid grid--features">
+        <article class="card feature reveal">
+          <span class="feature__icon">💬</span>
+          <h3>Chat With Jarvis</h3>
+          <p>Ask questions, plan tasks, code, research, and manage your workflow from one assistant with multi-thread conversations.</p>
+        </article>
+
+        <article class="card feature reveal">
+          <span class="feature__icon">📞</span>
+          <h3>Call Jarvis</h3>
+          <p>Use voice conversations for fast, hands-free help. Talk in-app or wire up phone calling when you need it.</p>
+        </article>
+
+        <article class="card feature reveal">
+          <span class="feature__icon">✉️</span>
+          <h3>Message Jarvis</h3>
+          <p>Send and receive AI-powered messages for reminders, quick updates, and assistant-triggered notifications.</p>
+        </article>
+
+        <article class="card feature reveal">
+          <span class="feature__icon">🧠</span>
+          <h3>Local AI Models</h3>
+          <p>Run local models through supported providers like Ollama where available — private, offline-friendly workflows.</p>
+        </article>
+
+        <article class="card feature reveal">
+          <span class="feature__icon">🧩</span>
+          <h3>Plugin System</h3>
+          <p>Connect tools, APIs, and workflows into one assistant so your stack works together instead of in silos.</p>
+        </article>
+
+        <article class="card feature reveal">
+          <span class="feature__icon">🚀</span>
+          <h3>Creator Workspace</h3>
+          <p>Built for coding, launching apps, planning businesses, and automating the daily work that adds up.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================= DEMO VIDEOS ========================= -->
+    <section class="section" id="demo">
+      <div class="section__head reveal">
+        <span class="pill pill--soft">Demo</span>
+        <h2 class="section__title">See Jarvis One in motion</h2>
+        <p class="section__lead">Real walkthroughs of the app. More full demos coming soon.</p>
+      </div>
+
+      <div class="video reveal">
+        <!-- Featured player. The src is set by script.js from the active thumbnail. -->
+        <div class="video__stage glass">
+          <video id="featuredVideo" controls preload="metadata" playsinline poster="">
+            <!-- EDIT VIDEO: drop real files in assets/videos/ (see that folder's README) -->
+            <source id="featuredSource" src="assets/videos/jarvis-demo-1.mp4" type="video/mp4" />
+            Your browser does not support embedded video.
+          </video>
+          <!-- Friendly fallback shown when the file is missing -->
+          <div class="video__fallback" id="videoFallback" hidden>
+            <span class="video__fallback-icon">🎬</span>
+            <p><strong>This demo is on the way.</strong></p>
+            <p class="muted">Drop your clip at <code>assets/videos/jarvis-demo-1.mp4</code> to play it here.</p>
+          </div>
+          <h3 class="video__caption" id="videoCaption">Jarvis One App Walkthrough</h3>
+        </div>
+
+        <!-- Thumbnails. Click to swap the featured player. -->
+        <div class="video__list" id="videoList" role="list">
+          <button class="video__thumb is-active" role="listitem"
+                  data-src="assets/videos/jarvis-demo-1.mp4"
+                  data-title="Jarvis One App Walkthrough"
+                  data-duration="Full tour">
+            <span class="video__thumb-art">🖥️</span>
+            <span class="video__thumb-meta">
+              <span class="video__thumb-title">App Walkthrough</span>
+              <span class="video__thumb-sub">A tour of the cozy workspace</span>
+            </span>
+            <span class="video__thumb-play">▶</span>
+          </button>
+
+          <button class="video__thumb" role="listitem"
+                  data-src="assets/videos/jarvis-demo-2.mp4"
+                  data-title="Voice + Chat Demo"
+                  data-duration="Voice">
+            <span class="video__thumb-art">🎙️</span>
+            <span class="video__thumb-meta">
+              <span class="video__thumb-title">Voice + Chat Demo</span>
+              <span class="video__thumb-sub">Talking with Jarvis hands-free</span>
+            </span>
+            <span class="video__thumb-play">▶</span>
+          </button>
+
+          <button class="video__thumb" role="listitem"
+                  data-src="assets/videos/jarvis-demo-3.mp4"
+                  data-title="Local Models &amp; Plugins Preview"
+                  data-duration="Local">
+            <span class="video__thumb-art">🧩</span>
+            <span class="video__thumb-meta">
+              <span class="video__thumb-title">Local Models &amp; Plugins</span>
+              <span class="video__thumb-sub">Private models and connections</span>
+            </span>
+            <span class="video__thumb-play">▶</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== INTERACTIVE CHAT DEMO ===================== -->
+    <section class="section" id="chat">
+      <div class="section__head reveal">
+        <span class="pill pill--soft">Try it</span>
+        <h2 class="section__title">Have a quick chat with Jarvis</h2>
+        <p class="section__lead">A live preview of the Jarvis One chat. Tap a suggested prompt or type your own — this demo runs entirely in your browser.</p>
+      </div>
+
+      <div class="chat glass reveal">
+        <div class="chat__head">
+          <span class="chat__avatar" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="40" height="40" fill="none">
+              <defs>
+                <linearGradient id="chatMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#a855f7" /><stop offset="55%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#60a5fa" />
+                </linearGradient>
+              </defs>
+              <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#chatMark)" />
+              <path d="M40 16 L40 38 a10 10 0 0 1 -20 0" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            </svg>
+          </span>
+          <div class="chat__id">
+            <span class="chat__name">Jarvis</span>
+            <span class="chat__status"><span class="dot dot--live"></span> Online · demo mode</span>
+          </div>
+        </div>
+
+        <div class="chat__log" id="chatLog" aria-live="polite">
+          <!-- messages injected by script.js -->
+        </div>
+
+        <div class="chat__suggest" id="chatSuggest">
+          <button class="suggest" data-prompt="Call me at 3:00 AM">Call me at 3:00 AM</button>
+          <button class="suggest" data-prompt="Help me launch my app">Help me launch my app</button>
+          <button class="suggest" data-prompt="Show my local AI models">Show my local AI models</button>
+          <button class="suggest" data-prompt="Message me a reminder">Message me a reminder</button>
+          <button class="suggest" data-prompt="Explain Jarvis One">Explain Jarvis One</button>
+        </div>
+
+        <form class="chat__input" id="chatForm" autocomplete="off">
+          <input id="chatField" type="text" placeholder="Message Jarvis…" aria-label="Message Jarvis" />
+          <button type="submit" class="btn btn--primary chat__send" aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-3.5-6L4 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>
+            Send
+          </button>
+        </form>
+        <p class="chat__note muted">This is an interactive preview with pre-written responses — not a live model.</p>
+      </div>
+    </section>
+
+    <!-- ============================ ABOUT ============================ -->
+    <section class="section" id="about">
+      <div class="about reveal">
+        <div class="about__text">
+          <span class="pill pill--soft">About</span>
+          <h2 class="section__title">About Jarvis One</h2>
+          <p>
+            Jarvis One is a desktop AI assistant designed to bring chat, voice, local
+            models, plugins, and automation into one clean workspace. It is built for
+            creators, developers, entrepreneurs, and power users who want one assistant
+            that can help manage projects, code, research, reminders, and daily workflows.
+          </p>
+          <p class="muted">
+            Local-first by design — your chats, tasks, memories, and settings live on your
+            device by default. Cloud features are opt-in, and you bring your own model keys.
+          </p>
+          <div class="about__stats">
+            <div class="stat"><span class="stat__num grad-text">21+</span><span class="stat__label">model providers</span></div>
+            <div class="stat"><span class="stat__num grad-text">1</span><span class="stat__label">calm workspace</span></div>
+            <div class="stat"><span class="stat__num grad-text">3</span><span class="stat__label">platforms supported</span></div>
+          </div>
+        </div>
+        <div class="about__panel glass">
+          <h3 class="about__panel-title">What lives inside</h3>
+          <ul class="ticks">
+            <li>AI chat with multi-thread conversations</li>
+            <li>Agent council — multiple agents in parallel</li>
+            <li>Voice calling &amp; messaging workflows</li>
+            <li>Coding terminals with real shells</li>
+            <li>Tasks, kanban, schedule &amp; reminders</li>
+            <li>Persistent memory across sessions</li>
+            <li>Plugin connections for tools &amp; APIs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== DOWNLOAD ========================== -->
+    <section class="section" id="download">
+      <div class="download glass reveal">
+        <div class="download__head">
+          <span class="pill pill--soft">Download</span>
+          <h2 class="section__title">Download Jarvis One</h2>
+          <p class="section__lead">Start building with your personal AI command center.</p>
+        </div>
+
+        <div class="download__actions">
+          <!-- ============================================================= -->
+          <!--  EDIT FINAL DOWNLOAD LINK HERE                                -->
+          <!--  Replace the href below with your latest release URL.         -->
+          <!--  Current real link (v0.1.28 Windows x64):                     -->
+          <!-- ============================================================= -->
+          <a class="btn btn--primary btn--lg" href="https://github.com/Cookie774-GameDev/Jarivs-One/releases/download/v0.1.28/Jarvis-One-0.1.28-Windows-x64.exe">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download for Windows
+          </a>
+          <!-- EDIT: point this at your setup guide / docs when ready -->
+          <a class="btn btn--ghost btn--lg" href="https://github.com/Cookie774-GameDev/Jarivs-One/blob/main/DOWNLOAD.md">View Setup Guide</a>
+          <!-- EDIT: swap for a newsletter/Discord link when ready -->
+          <a class="btn btn--ghost btn--lg" href="#contact">Join Updates</a>
+        </div>
+
+        <p class="download__meta muted">Latest: v0.1.28 · Windows 10/11 · macOS &amp; Linux builds via the setup guide</p>
+
+        <div class="grid grid--reqs">
+          <div class="req">
+            <span class="req__icon">🪟</span>
+            <span class="req__title">Windows 10/11</span>
+            <span class="req__sub muted">64-bit desktop install</span>
+          </div>
+          <div class="req">
+            <span class="req__icon">🌐</span>
+            <span class="req__title">Internet connection</span>
+            <span class="req__sub muted">for cloud AI providers</span>
+          </div>
+          <div class="req">
+            <span class="req__icon">🧠</span>
+            <span class="req__title">Optional local models</span>
+            <span class="req__sub muted">e.g. Ollama for offline use</span>
+          </div>
+          <div class="req">
+            <span class="req__icon">🎙️</span>
+            <span class="req__title">Microphone</span>
+            <span class="req__sub muted">for voice features</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= FAQ ============================= -->
+    <section class="section" id="faq">
+      <div class="section__head reveal">
+        <span class="pill pill--soft">FAQ</span>
+        <h2 class="section__title">Questions, answered</h2>
+      </div>
+
+      <div class="faq reveal">
+        <details class="faq__item">
+          <summary>Is Jarvis One free?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>Pricing and availability may vary by release. The download section will always show the latest option.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Does Jarvis One support voice?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>Yes, Jarvis One is designed to support voice interaction where configured.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Can Jarvis One use local models?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>Jarvis One can support compatible local model providers depending on your setup.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Is this connected to VibeVerseOS?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>Yes, VibeVerseOS is the web home and ecosystem around Jarvis One.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Can Jarvis call or message me?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>Jarvis One is being designed with call and message workflows for reminders, notifications, and assistant interactions.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- =========================== CONTACT =========================== -->
+    <section class="section" id="contact">
+      <div class="contact reveal">
+        <div class="contact__intro">
+          <span class="pill pill--soft">Contact</span>
+          <h2 class="section__title">Get in touch</h2>
+          <p class="section__lead">Questions, feedback, or partnership ideas? Send a note and we’ll get back to you.</p>
+          <ul class="contact__list">
+            <li>✉️ <a href="mailto:support@vibeverseos.com">support@vibeverseos.com</a></li>
+            <li>🌐 <a href="https://vibeverseos.com">vibeverseos.com</a></li>
+          </ul>
+        </div>
+
+        <form class="contact__form glass" id="contactForm" novalidate>
+          <!-- BACKEND: this form is front-end only. To make it live, POST these fields
+               to your endpoint (e.g. a Supabase Edge Function, Formspree, or your API)
+               inside script.js → handleContactSubmit(). -->
+          <div class="field">
+            <label for="cName">Name</label>
+            <input id="cName" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="cEmail">Email</label>
+            <input id="cEmail" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="cMessage">Message</label>
+            <textarea id="cMessage" name="message" rows="4" placeholder="How can Jarvis help?" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--lg contact__submit">Send message</button>
+          <p class="contact__success" id="contactSuccess" hidden>Thanks — your message is ready to be connected to the backend.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="30" height="30" fill="none">
+            <defs>
+              <linearGradient id="footMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#a855f7" /><stop offset="55%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#60a5fa" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#footMark)" />
+            <path d="M40 16 L40 38 a10 10 0 0 1 -20 0" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+        </span>
+        <div>
+          <p class="footer__name">Jarvis One</p>
+          <p class="footer__by muted">by VibeVerseOS · <a href="https://vibeverseos.com">vibeverseos.com</a></p>
+        </div>
+      </div>
+
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#download">Download</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer__legal">
+      <p class="muted">Jarvis One is an independent AI assistant platform. Product features may vary by version and provider configuration.</p>
+      <p class="muted">© <span id="year"></span> VibeVerseOS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Toast for small confirmations -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
