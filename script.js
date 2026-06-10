@@ -443,4 +443,92 @@
       }).catch(() => toast('Press Ctrl/Cmd + C to copy'));
     });
   });
+
+  /* ----------------------- Interactive phone demo ----------------------- */
+  const phoneStage = $('#phone');
+  if (phoneStage) {
+    const tabs   = $$('.phone__tab', phoneStage);
+    const views  = $$('.phone__view', phoneStage);
+    const timerEl   = $('#callTimer');
+    const captionEl = $('#callCaption');
+    const thread    = $('#smsThread');
+
+    const captions = [
+      '“Scheduling your 9am review call.”',
+      '“Tests passed — deploying now.”',
+      '“Pushed the fix and updated the notes.”',
+      '“Your launch checklist is ready when you are.”',
+    ];
+    const smsScript = [
+      { who: 'me', text: 'Deploy the new build when tests pass.' },
+      { who: 'ai', text: 'On it — running the tests now. ✅' },
+      { who: 'ai', text: 'All green. Shipping to production…' },
+      { who: 'me', text: 'Nice. Text me when it’s live.' },
+      { who: 'ai', text: 'Live 🎉 I’ll watch for errors and ping you if anything spikes.' },
+    ];
+
+    let secs = 0, current = 'call';
+    let timerId = null, capId = null, capIdx = 0, smsId = null, autoId = null, running = false;
+    const fmt = (n) => String(n).padStart(2, '0');
+
+    function stopCall() { if (timerId) clearInterval(timerId); if (capId) clearInterval(capId); timerId = capId = null; }
+    function startCall() {
+      secs = 0; capIdx = 0;
+      if (timerEl) timerEl.textContent = '00:00';
+      if (captionEl) captionEl.textContent = captions[0];
+      stopCall();
+      if (prefersReduced) { if (timerEl) timerEl.textContent = '00:12'; return; }
+      timerId = setInterval(() => {
+        secs++; if (timerEl) timerEl.textContent = `${fmt(Math.floor(secs / 60))}:${fmt(secs % 60)}`;
+      }, 1000);
+      capId = setInterval(() => {
+        capIdx = (capIdx + 1) % captions.length;
+        if (captionEl) { captionEl.classList.remove('is-in'); void captionEl.offsetWidth; captionEl.textContent = captions[capIdx]; captionEl.classList.add('is-in'); }
+      }, 3200);
+    }
+
+    function buildBubble(m) {
+      const b = document.createElement('div');
+      b.className = 'sms-bubble sms-bubble--' + (m.who === 'ai' ? 'ai' : 'me');
+      b.textContent = m.text;
+      return b;
+    }
+    function stopSms() { if (smsId) clearTimeout(smsId); smsId = null; }
+    function startSms() {
+      if (!thread) return;
+      thread.innerHTML = '';
+      stopSms();
+      if (prefersReduced) { smsScript.forEach((m) => thread.appendChild(buildBubble(m))); return; }
+      let i = 0;
+      const add = () => {
+        if (i >= smsScript.length) { smsId = setTimeout(() => { thread.innerHTML = ''; i = 0; add(); }, 2800); return; }
+        const m = smsScript[i++];
+        thread.appendChild(buildBubble(m));
+        thread.scrollTop = thread.scrollHeight;
+        smsId = setTimeout(add, m.who === 'ai' ? 1500 : 1100);
+      };
+      add();
+    }
+
+    function show(view) {
+      current = view;
+      tabs.forEach((t) => t.classList.toggle('is-active', t.getAttribute('data-view') === view));
+      views.forEach((v) => { const match = v.getAttribute('data-view') === view; v.classList.toggle('is-active', match); v.hidden = !match; });
+      if (view === 'call') { stopSms(); startCall(); } else { stopCall(); startSms(); }
+    }
+    function startAuto() { if (autoId) clearInterval(autoId); if (!prefersReduced) autoId = setInterval(() => show(current === 'call' ? 'sms' : 'call'), 8000); }
+    function stopAll() { stopCall(); stopSms(); if (autoId) clearInterval(autoId); autoId = null; }
+
+    tabs.forEach((t) => t.addEventListener('click', () => { show(t.getAttribute('data-view')); startAuto(); }));
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !running) { running = true; show('call'); startAuto(); }
+          else if (!e.isIntersecting && running) { running = false; stopAll(); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(phoneStage);
+    } else { show('call'); startAuto(); }
+  }
 })();

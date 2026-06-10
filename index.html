@@ -48,9 +48,7 @@
   <!-- Animated background glow blobs -->
   <div class="bg-orbs" aria-hidden="true">
     <span class="orb orb--violet" data-parallax="0.05"></span>
-    <span class="orb orb--clay"   data-parallax="0.09"></span>
-    <span class="orb orb--rose"   data-parallax="0.06"></span>
-    <span class="orb orb--blue"   data-parallax="0.04"></span>
+    <span class="orb orb--clay"   data-parallax="0.08"></span>
     <div class="bg-grain"></div>
   </div>
 
@@ -101,12 +99,11 @@
         </span>
         <h1 class="hero__title">
           Meet <span class="grad-text">VibeSpace</span> —<br />
-          your personal AI command center.
+          the calm home for your busy day.
         </h1>
         <p class="hero__sub">
-          Chat, call, message, automate, and control your digital workspace from one
-          cozy AI-powered desktop assistant. Every model, agent, voice, and task —
-          gathered into one calm window.
+          Chat, call, and message in one warm desktop app — then hand off the busywork
+          and get back to the part you actually care about. No tab juggling, no clutter.
         </p>
 
         <div class="hero__actions">
@@ -233,7 +230,7 @@
         <article class="card feature reveal" data-tilt>
           <span class="feature__icon">✉️</span>
           <h3>Message VibeSpace</h3>
-          <p>Send and receive AI-powered messages for reminders, quick updates, and assistant-triggered notifications.</p>
+          <p>Send and receive messages for reminders, quick updates, and the little nudges that keep your day on track.</p>
         </article>
 
         <article class="card feature reveal" data-tilt>
@@ -410,58 +407,84 @@
         <div class="connect__list stagger">
           <article class="connect__item reveal" data-tilt>
             <span class="connect__icon">📞</span>
-            <div><h3>Call VibeSpace</h3><p>Tap to talk to your AI like a phone call — hands-free help wherever you are, on any device.</p></div>
+            <div><h3>Call VibeSpace</h3><p>Tap to talk to VibeSpace like a phone call — hands-free help wherever you happen to be.</p></div>
           </article>
           <article class="connect__item reveal" data-tilt>
             <span class="connect__icon">🔔</span>
-            <div><h3>VibeSpace calls you</h3><p>Get a call for reminders, deadlines, alerts, or a morning briefing — VibeSpace reaches out when it matters.</p></div>
+            <div><h3>It calls you back</h3><p>A call for reminders, deadlines, or a morning rundown — VibeSpace reaches out when it actually matters.</p></div>
           </article>
           <article class="connect__item reveal" data-tilt>
             <span class="connect__icon">💬</span>
-            <div><h3>Message back and forth</h3><p>Text VibeSpace and it replies instantly. Fire off a quick instruction and it gets to work.</p></div>
+            <div><h3>Text it, both ways</h3><p>Message VibeSpace and it replies in seconds. Fire off a quick note and it gets to work.</p></div>
           </article>
           <article class="connect__item reveal" data-tilt>
             <span class="connect__icon">🌍</span>
-            <div><h3>Control projects from anywhere</h3><p>Start tasks, check status, ship updates, and steer your whole build from across the world.</p></div>
+            <div><h3>Run things from anywhere</h3><p>Kick off tasks, check status, and ship updates from the train, the couch, or the other side of the planet.</p></div>
           </article>
           <article class="connect__item reveal" data-tilt>
             <span class="connect__icon">🛠️</span>
-            <div><h3>VibeSpace runs the project</h3><p>It plans, codes, organizes, and keeps things moving — your always-on operator while you’re away.</p></div>
+            <div><h3>It keeps the project moving</h3><p>Planning, code, notes, follow-ups — VibeSpace keeps things ticking along while you’re away.</p></div>
           </article>
         </div>
 
-        <!-- right: animated incoming-call visual -->
-        <div class="call reveal" aria-hidden="true">
-          <div class="call__card glass">
-            <div class="call__rings"><span></span><span></span><span></span></div>
-            <div class="call__avatar">
-              <svg viewBox="0 0 64 64" width="58" height="58" fill="none">
-                <defs><linearGradient id="callMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#b98cff"/><stop offset="60%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#e8a87c"/></linearGradient></defs>
-                <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#callMark)"/>
-                <path d="M22 22 L32 42 L42 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              </svg>
+        <!-- right: interactive phone (live call screen + message thread) -->
+        <div class="phone-stage reveal">
+          <div class="phone" id="phone">
+            <span class="phone__notch"></span>
+            <div class="phone__screen">
+              <div class="phone__switch" role="tablist" aria-label="Call or messages">
+                <button type="button" class="phone__tab is-active" data-view="call" role="tab">Call</button>
+                <button type="button" class="phone__tab" data-view="sms" role="tab">Messages</button>
+              </div>
+
+              <!-- CALL VIEW -->
+              <div class="phone__view is-active" data-view="call">
+                <div class="callscreen">
+                  <div class="callscreen__rings" aria-hidden="true"><span></span><span></span><span></span></div>
+                  <span class="callscreen__avatar">
+                    <svg viewBox="0 0 64 64" width="56" height="56" fill="none">
+                      <defs><linearGradient id="callMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#b98cff"/><stop offset="60%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#e8a87c"/></linearGradient></defs>
+                      <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#callMark)"/>
+                      <path d="M22 22 L32 42 L42 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                  </span>
+                  <p class="callscreen__name">VibeSpace</p>
+                  <p class="callscreen__timer" id="callTimer">00:00</p>
+                  <span class="wave callscreen__wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  <p class="callscreen__caption" id="callCaption">“Scheduling your 9am review call.”</p>
+                  <div class="callscreen__actions">
+                    <span class="call__btn call__btn--soft" aria-hidden="true">🎙️</span>
+                    <span class="call__btn call__btn--end" aria-hidden="true">✕</span>
+                    <span class="call__btn call__btn--soft" aria-hidden="true">🔊</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MESSAGES VIEW -->
+              <div class="phone__view" data-view="sms" hidden>
+                <div class="smsscreen">
+                  <div class="smsscreen__head">
+                    <span class="sms__ava" aria-hidden="true">V</span>
+                    <span class="sms__id"><strong>VibeSpace</strong><span class="muted">online · replies in seconds</span></span>
+                  </div>
+                  <div class="smsscreen__thread" id="smsThread"></div>
+                </div>
+              </div>
             </div>
-            <p class="call__name">VibeSpace</p>
-            <p class="call__status">Incoming call · mobile</p>
-            <span class="wave call__wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            <div class="call__actions">
-              <span class="call__btn call__btn--decline" aria-hidden="true">✕</span>
-              <span class="call__btn call__btn--accept" aria-hidden="true">📞</span>
-            </div>
+            <span class="phone__home"></span>
           </div>
-          <div class="call__sms glass">
-            <span class="call__sms-bubble">“Deploy the new build when tests pass.”</span>
-            <span class="call__sms-bubble call__sms-bubble--ai">On it — running tests now, I’ll text you the moment it ships. ✓</span>
-          </div>
+
+          <span class="phone__chip phone__chip--1">🌍 Connected from anywhere</span>
+          <span class="phone__chip phone__chip--2">📞 Two-way calls &amp; texts</span>
         </div>
       </div>
 
       <div class="connect__chips">
         <span class="chip">🎙️ Voice calls</span>
-        <span class="chip">💬 SMS &amp; chat</span>
-        <span class="chip">⏰ Reminders &amp; alerts</span>
-        <span class="chip">⚡ Remote actions</span>
+        <span class="chip">💬 Two-way texts</span>
+        <span class="chip">⏰ Reminders &amp; nudges</span>
+        <span class="chip">⚡ Hands-off actions</span>
         <span class="chip">📱 Works on any phone</span>
       </div>
       <p class="connect__note muted">Calling and messaging features are rolling out and may vary by version, region, and provider configuration.</p>
