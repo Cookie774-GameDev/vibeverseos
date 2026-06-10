@@ -143,7 +143,7 @@
   }
 
   /* ------------------------- Active nav highlight ------------------------ */
-  const sectionIds = ['home', 'features', 'how', 'demo', 'chat', 'about', 'voices', 'download', 'faq', 'contact'];
+  const sectionIds = ['home', 'features', 'how', 'connect', 'demo', 'chat', 'about', 'voices', 'download', 'faq', 'contact'];
   const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
   const linkFor = (id) => $(`#navLinks a[href="#${id}"]`);
 
@@ -398,4 +398,49 @@
       if (contactSuccess && !contactSuccess.hidden) contactSuccess.hidden = true;
     });
   }
+
+  /* ----------------------- Install OS tab switcher ----------------------- */
+  const installTabs   = $$('.install__tab');
+  const installPanels = $$('.install__panel');
+  installTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const os = tab.getAttribute('data-os');
+      installTabs.forEach((t) => t.classList.toggle('is-active', t === tab));
+      installPanels.forEach((p) => {
+        const match = p.getAttribute('data-os') === os;
+        p.classList.toggle('is-active', match);
+        p.hidden = !match;
+      });
+    });
+  });
+
+  /* ----------------------- Copy-to-clipboard buttons --------------------- */
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    // fallback for file:// previews and older browsers
+    return new Promise((resolve, reject) => {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta); resolve();
+      } catch (e) { reject(e); }
+    });
+  }
+  $$('.cmd__copy').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const code = btn.parentElement ? btn.parentElement.querySelector('.cmd__code') : null;
+      const text = code ? code.textContent.trim() : '';
+      if (!text) return;
+      copyText(text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('is-copied');
+        toast('Command copied');
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('is-copied'); }, 1800);
+      }).catch(() => toast('Press Ctrl/Cmd + C to copy'));
+    });
+  });
 })();
