@@ -5,68 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ============================================================= -->
-  <!--  Jarvis One — landing page for vibeverseos.com                -->
+  <!--  VibeSpace — landing page for vibeverseos.com                 -->
   <!--  Static HTML/CSS/JS. Open index.html directly to preview.     -->
+  <!--  Product: VibeSpace · Ecosystem: VibeVerseOS                   -->
   <!--  Edit copy freely. Look for <!-- EDIT ... --> markers.        -->
   <!-- ============================================================= -->
 
-  <title>Jarvis One — Your personal AI command center | VibeVerseOS</title>
-  <meta name="description" content="Meet Jarvis One — a cozy AI desktop assistant. Chat, call, message, run local models, connect plugins, and automate your workflow from one calm command center. Built by VibeVerseOS." />
-  <meta name="theme-color" content="#0d0a14" />
+  <title>VibeSpace — Your personal AI command center | VibeVerseOS</title>
+  <meta name="description" content="Meet VibeSpace — a cozy AI desktop assistant. Chat, call, message, run local models, connect plugins, and automate your workflow from one calm command center. Part of VibeVerseOS." />
+  <meta name="theme-color" content="#0f0b13" />
   <meta name="author" content="VibeVerseOS" />
 
-  <!-- Open Graph / social share (swap og-cover when ready) -->
+  <!-- Open Graph / social share -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Jarvis One — Your personal AI command center" />
+  <meta property="og:title" content="VibeSpace — Your personal AI command center" />
   <meta property="og:description" content="Chat, call, automate, and control your digital workspace from one cozy AI-powered desktop assistant." />
   <meta property="og:url" content="https://vibeverseos.com" />
   <!-- EDIT: add a real share image at assets/images/og-cover.png then uncomment -->
   <!-- <meta property="og:image" content="https://vibeverseos.com/assets/images/og-cover.png" /> -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Jarvis One — Your personal AI command center" />
+  <meta name="twitter:title" content="VibeSpace — Your personal AI command center" />
   <meta name="twitter:description" content="A cozy AI workspace built for creators, builders, and everyday power users." />
 
-  <!-- Favicon: inline SVG so no external file is required -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='4' x2='60' y2='60'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='55%25' stop-color='%238b5cf6'/%3E%3Cstop offset='100%25' stop-color='%2360a5fa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='60' height='60' rx='16' fill='url(%23g)'/%3E%3Cpath d='M40 16 L40 38 a10 10 0 0 1 -20 0' stroke='white' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E" />
+  <!-- Favicon: inline SVG -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='4' x2='60' y2='60'%3E%3Cstop offset='0%25' stop-color='%23b98cff'/%3E%3Cstop offset='60%25' stop-color='%238b5cf6'/%3E%3Cstop offset='100%25' stop-color='%23e8a87c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='60' height='60' rx='18' fill='url(%23g)'/%3E%3Cpath d='M22 22 L32 42 L42 22' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 
-  <!-- Fonts: match the real Jarvis One app (Plus Jakarta Sans + Fraunces + JetBrains Mono) -->
+  <!-- Fonts: Fraunces (cozy serif display) + Plus Jakarta Sans (body) + JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- ===== Animated background glow blobs (decorative) ===== -->
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Cursor spotlight (follows the mouse on fine-pointer devices) -->
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- Animated background glow blobs -->
   <div class="bg-orbs" aria-hidden="true">
-    <span class="orb orb--violet"></span>
-    <span class="orb orb--purple"></span>
-    <span class="orb orb--pink"></span>
-    <span class="orb orb--blue"></span>
-    <div class="bg-grid"></div>
+    <span class="orb orb--violet" data-parallax="0.05"></span>
+    <span class="orb orb--clay"   data-parallax="0.09"></span>
+    <span class="orb orb--rose"   data-parallax="0.06"></span>
+    <span class="orb orb--blue"   data-parallax="0.04"></span>
+    <div class="bg-grain"></div>
   </div>
 
   <!-- ============================ NAVBAR ============================ -->
   <header class="nav" id="top">
     <nav class="nav__inner" aria-label="Primary">
-      <a class="brand" href="#top" aria-label="Jarvis One home">
-        <!-- EDIT LOGO: replace this inline SVG with <img src="assets/images/logo.png"> if desired -->
+      <a class="brand" href="#top" aria-label="VibeSpace home">
+        <!-- EDIT LOGO: replace inline SVG with <img src="assets/images/logo.png"> if desired -->
         <span class="brand__mark" aria-hidden="true">
           <svg viewBox="0 0 64 64" width="34" height="34" fill="none">
             <defs>
               <linearGradient id="navMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#a855f7" />
-                <stop offset="55%" stop-color="#8b5cf6" />
-                <stop offset="100%" stop-color="#60a5fa" />
+                <stop offset="0%" stop-color="#b98cff" /><stop offset="60%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#e8a87c" />
               </linearGradient>
             </defs>
-            <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#navMark)" />
-            <path d="M40 16 L40 38 a10 10 0 0 1 -20 0" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#navMark)" />
+            <path d="M22 22 L32 42 L42 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
           </svg>
         </span>
         <span class="brand__text">
-          <span class="brand__name">Jarvis One</span>
+          <span class="brand__name">VibeSpace</span>
           <span class="brand__badge">VibeVerseOS</span>
         </span>
       </a>
@@ -77,11 +82,11 @@
 
       <div class="nav__links" id="navLinks">
         <a href="#features">Features</a>
+        <a href="#how">How it works</a>
         <a href="#demo">Demo</a>
-        <a href="#chat">Try Jarvis</a>
+        <a href="#chat">Try VibeSpace</a>
         <a href="#about">About</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact">Contact</a>
         <a href="#download" class="btn btn--primary btn--sm nav__cta">Download</a>
       </div>
     </nav>
@@ -95,21 +100,20 @@
           <span class="dot dot--live"></span> Now in early access · v0.1.28
         </span>
         <h1 class="hero__title">
-          Meet <span class="grad-text">Jarvis One</span> —<br />
+          Meet <span class="grad-text">VibeSpace</span> —<br />
           your personal AI command center.
         </h1>
         <p class="hero__sub">
           Chat, call, message, automate, and control your digital workspace from one
-          cozy AI-powered desktop assistant. Every model, agent, voice, and task — in
-          one calm window.
+          cozy AI-powered desktop assistant. Every model, agent, voice, and task —
+          gathered into one calm window.
         </p>
 
         <div class="hero__actions">
-          <!-- EDIT DOWNLOAD LINK (primary): this points at the current real GitHub release.
-               When you cut a new version, update the href below (and the one in #download). -->
-          <a class="btn btn--primary btn--lg" href="https://github.com/Cookie774-GameDev/Jarivs-One/releases/download/v0.1.28/Jarvis-One-0.1.28-Windows-x64.exe">
+          <!-- EDIT DOWNLOAD LINK (primary): real current build. Update on each release. -->
+          <a class="btn btn--primary btn--lg magnetic" href="https://github.com/Cookie774-GameDev/Jarivs-One/releases/download/v0.1.28/Jarvis-One-0.1.28-Windows-x64.exe">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Download Jarvis One
+            Download VibeSpace
           </a>
           <a class="btn btn--ghost btn--lg" href="#demo">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>
@@ -119,25 +123,24 @@
 
         <div class="hero__badges">
           <span class="chip"><span class="dot dot--live"></span> Built for Windows</span>
-          <span class="chip">Private-first local workflow</span>
-          <span class="chip">BYOK · 21 model providers</span>
+          <span class="chip">Private-first &amp; local</span>
+          <span class="chip">Bring your own keys</span>
         </div>
       </div>
 
-      <!-- Hero visual: app mockup card -->
+      <!-- Hero visual: app mockup card (tilts toward the cursor) -->
       <div class="hero__visual reveal" aria-hidden="true">
-        <!-- EDIT HERO IMAGE: to use a real screenshot, uncomment the line below and
-             remove (or keep behind) the mockup markup. -->
-        <!-- <img class="hero__shot" src="assets/images/hero-preview.png" alt="Jarvis One desktop app" /> -->
+        <!-- EDIT HERO IMAGE: to use a real screenshot, uncomment below. -->
+        <!-- <img class="hero__shot" src="assets/images/hero-preview.png" alt="VibeSpace desktop app" /> -->
 
-        <div class="mockup glass">
+        <div class="mockup glass" id="heroMockup">
           <div class="mockup__bar">
             <span class="traffic"><i></i><i></i><i></i></span>
-            <span class="mockup__title">Jarvis One — Workspace</span>
+            <span class="mockup__title">VibeSpace — Workspace</span>
             <span class="mockup__pills">
               <span class="pill pill--mono"><span class="dot dot--live"></span> Online</span>
               <span class="pill pill--mono"><span class="dot dot--blue"></span> Voice Ready</span>
-              <span class="pill pill--mono"><span class="dot dot--pink"></span> Local Models</span>
+              <span class="pill pill--mono"><span class="dot dot--clay"></span> Local Models</span>
             </span>
           </div>
 
@@ -153,14 +156,14 @@
 
             <div class="mockup__main">
               <div class="bubble bubble--ai">
-                <span class="bubble__who">Jarvis</span>
+                <span class="bubble__who">VibeSpace</span>
                 Good to see you. Workspace synced — 3 tasks due today and your local model is warm.
               </div>
               <div class="bubble bubble--me">
                 Draft the launch checklist and call me at 9am to review.
               </div>
               <div class="bubble bubble--ai">
-                <span class="bubble__who">Jarvis</span>
+                <span class="bubble__who">VibeSpace</span>
                 On it. Checklist drafted ✓ · Reminder call scheduled for 9:00 AM ✓
               </div>
 
@@ -183,7 +186,6 @@
           </div>
         </div>
 
-        <!-- floating accent cards -->
         <div class="float-card float-card--1 glass">
           <span class="dot dot--live"></span> Call scheduled · 9:00 AM
         </div>
@@ -193,7 +195,7 @@
       </div>
     </section>
 
-    <!-- marquee of trust signals -->
+    <!-- trust strip -->
     <section class="strip reveal" aria-label="At a glance">
       <div class="strip__inner">
         <span>🔒 Local-first &amp; private</span>
@@ -211,46 +213,75 @@
         <span class="pill pill--soft">Features</span>
         <h2 class="section__title">One assistant for your whole workflow</h2>
         <p class="section__lead">
-          Jarvis One brings chat, voice, local models, plugins, and automation into a
-          single calm workspace — so you stop juggling a dozen tabs and tools.
+          VibeSpace brings chat, voice, local models, plugins, and automation into a
+          single calm workspace — so you can stop juggling a dozen tabs and tools.
         </p>
       </div>
 
-      <div class="grid grid--features">
-        <article class="card feature reveal">
+      <div class="grid grid--features stagger">
+        <article class="card feature reveal" data-tilt>
           <span class="feature__icon">💬</span>
-          <h3>Chat With Jarvis</h3>
+          <h3>Chat with VibeSpace</h3>
           <p>Ask questions, plan tasks, code, research, and manage your workflow from one assistant with multi-thread conversations.</p>
         </article>
 
-        <article class="card feature reveal">
+        <article class="card feature reveal" data-tilt>
           <span class="feature__icon">📞</span>
-          <h3>Call Jarvis</h3>
+          <h3>Call VibeSpace</h3>
           <p>Use voice conversations for fast, hands-free help. Talk in-app or wire up phone calling when you need it.</p>
         </article>
 
-        <article class="card feature reveal">
+        <article class="card feature reveal" data-tilt>
           <span class="feature__icon">✉️</span>
-          <h3>Message Jarvis</h3>
+          <h3>Message VibeSpace</h3>
           <p>Send and receive AI-powered messages for reminders, quick updates, and assistant-triggered notifications.</p>
         </article>
 
-        <article class="card feature reveal">
+        <article class="card feature reveal" data-tilt>
           <span class="feature__icon">🧠</span>
-          <h3>Local AI Models</h3>
+          <h3>Local AI models</h3>
           <p>Run local models through supported providers like Ollama where available — private, offline-friendly workflows.</p>
         </article>
 
-        <article class="card feature reveal">
+        <article class="card feature reveal" data-tilt>
           <span class="feature__icon">🧩</span>
-          <h3>Plugin System</h3>
+          <h3>Plugin system</h3>
           <p>Connect tools, APIs, and workflows into one assistant so your stack works together instead of in silos.</p>
         </article>
 
-        <article class="card feature reveal">
+        <article class="card feature reveal" data-tilt>
           <span class="feature__icon">🚀</span>
-          <h3>Creator Workspace</h3>
+          <h3>Creator workspace</h3>
           <p>Built for coding, launching apps, planning businesses, and automating the daily work that adds up.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========================= HOW IT WORKS ========================= -->
+    <section class="section" id="how">
+      <div class="section__head reveal">
+        <span class="pill pill--soft">How it works</span>
+        <h2 class="section__title">Calm to set up. Powerful to use.</h2>
+        <p class="section__lead">Three steps from download to your own AI command center.</p>
+      </div>
+
+      <div class="steps stagger">
+        <article class="step reveal" data-tilt>
+          <span class="step__num">01</span>
+          <h3>Download VibeSpace</h3>
+          <p>Install the desktop app for Windows in a couple of clicks. macOS &amp; Linux builds are available via the setup guide.</p>
+        </article>
+        <span class="step__line" aria-hidden="true"></span>
+        <article class="step reveal" data-tilt>
+          <span class="step__num">02</span>
+          <h3>Bring your keys</h3>
+          <p>Add your own model-provider keys, or run local models with Ollama. Everything stays on your device by default.</p>
+        </article>
+        <span class="step__line" aria-hidden="true"></span>
+        <article class="step reveal" data-tilt>
+          <span class="step__num">03</span>
+          <h3>Start commanding</h3>
+          <p>Chat, call, automate, and connect your tools from one cozy workspace — keyboard-first and always close at hand.</p>
         </article>
       </div>
     </section>
@@ -259,33 +290,29 @@
     <section class="section" id="demo">
       <div class="section__head reveal">
         <span class="pill pill--soft">Demo</span>
-        <h2 class="section__title">See Jarvis One in motion</h2>
+        <h2 class="section__title">See VibeSpace in motion</h2>
         <p class="section__lead">Real walkthroughs of the app. More full demos coming soon.</p>
       </div>
 
       <div class="video reveal">
-        <!-- Featured player. The src is set by script.js from the active thumbnail. -->
         <div class="video__stage glass">
           <video id="featuredVideo" controls preload="metadata" playsinline poster="">
             <!-- EDIT VIDEO: drop real files in assets/videos/ (see that folder's README) -->
             <source id="featuredSource" src="assets/videos/jarvis-demo-1.mp4" type="video/mp4" />
             Your browser does not support embedded video.
           </video>
-          <!-- Friendly fallback shown when the file is missing -->
           <div class="video__fallback" id="videoFallback" hidden>
             <span class="video__fallback-icon">🎬</span>
             <p><strong>This demo is on the way.</strong></p>
             <p class="muted">Drop your clip at <code>assets/videos/jarvis-demo-1.mp4</code> to play it here.</p>
           </div>
-          <h3 class="video__caption" id="videoCaption">Jarvis One App Walkthrough</h3>
+          <h3 class="video__caption" id="videoCaption">VibeSpace App Walkthrough</h3>
         </div>
 
-        <!-- Thumbnails. Click to swap the featured player. -->
         <div class="video__list" id="videoList" role="list">
           <button class="video__thumb is-active" role="listitem"
                   data-src="assets/videos/jarvis-demo-1.mp4"
-                  data-title="Jarvis One App Walkthrough"
-                  data-duration="Full tour">
+                  data-title="VibeSpace App Walkthrough">
             <span class="video__thumb-art">🖥️</span>
             <span class="video__thumb-meta">
               <span class="video__thumb-title">App Walkthrough</span>
@@ -296,20 +323,18 @@
 
           <button class="video__thumb" role="listitem"
                   data-src="assets/videos/jarvis-demo-2.mp4"
-                  data-title="Voice + Chat Demo"
-                  data-duration="Voice">
+                  data-title="Voice + Chat Demo">
             <span class="video__thumb-art">🎙️</span>
             <span class="video__thumb-meta">
               <span class="video__thumb-title">Voice + Chat Demo</span>
-              <span class="video__thumb-sub">Talking with Jarvis hands-free</span>
+              <span class="video__thumb-sub">Talking hands-free with VibeSpace</span>
             </span>
             <span class="video__thumb-play">▶</span>
           </button>
 
           <button class="video__thumb" role="listitem"
                   data-src="assets/videos/jarvis-demo-3.mp4"
-                  data-title="Local Models &amp; Plugins Preview"
-                  data-duration="Local">
+                  data-title="Local Models &amp; Plugins Preview">
             <span class="video__thumb-art">🧩</span>
             <span class="video__thumb-meta">
               <span class="video__thumb-title">Local Models &amp; Plugins</span>
@@ -325,8 +350,8 @@
     <section class="section" id="chat">
       <div class="section__head reveal">
         <span class="pill pill--soft">Try it</span>
-        <h2 class="section__title">Have a quick chat with Jarvis</h2>
-        <p class="section__lead">A live preview of the Jarvis One chat. Tap a suggested prompt or type your own — this demo runs entirely in your browser.</p>
+        <h2 class="section__title">Have a quick chat with VibeSpace</h2>
+        <p class="section__lead">A live preview of the VibeSpace chat. Tap a suggested prompt or type your own — this demo runs entirely in your browser.</p>
       </div>
 
       <div class="chat glass reveal">
@@ -335,33 +360,31 @@
             <svg viewBox="0 0 64 64" width="40" height="40" fill="none">
               <defs>
                 <linearGradient id="chatMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#a855f7" /><stop offset="55%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#60a5fa" />
+                  <stop offset="0%" stop-color="#b98cff" /><stop offset="60%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#e8a87c" />
                 </linearGradient>
               </defs>
-              <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#chatMark)" />
-              <path d="M40 16 L40 38 a10 10 0 0 1 -20 0" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+              <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#chatMark)" />
+              <path d="M22 22 L32 42 L42 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
             </svg>
           </span>
           <div class="chat__id">
-            <span class="chat__name">Jarvis</span>
+            <span class="chat__name">VibeSpace</span>
             <span class="chat__status"><span class="dot dot--live"></span> Online · demo mode</span>
           </div>
         </div>
 
-        <div class="chat__log" id="chatLog" aria-live="polite">
-          <!-- messages injected by script.js -->
-        </div>
+        <div class="chat__log" id="chatLog" aria-live="polite"></div>
 
         <div class="chat__suggest" id="chatSuggest">
           <button class="suggest" data-prompt="Call me at 3:00 AM">Call me at 3:00 AM</button>
           <button class="suggest" data-prompt="Help me launch my app">Help me launch my app</button>
           <button class="suggest" data-prompt="Show my local AI models">Show my local AI models</button>
           <button class="suggest" data-prompt="Message me a reminder">Message me a reminder</button>
-          <button class="suggest" data-prompt="Explain Jarvis One">Explain Jarvis One</button>
+          <button class="suggest" data-prompt="Explain VibeSpace">Explain VibeSpace</button>
         </div>
 
         <form class="chat__input" id="chatForm" autocomplete="off">
-          <input id="chatField" type="text" placeholder="Message Jarvis…" aria-label="Message Jarvis" />
+          <input id="chatField" type="text" placeholder="Message VibeSpace…" aria-label="Message VibeSpace" />
           <button type="submit" class="btn btn--primary chat__send" aria-label="Send message">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-3.5-6L4 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>
             Send
@@ -376,9 +399,9 @@
       <div class="about reveal">
         <div class="about__text">
           <span class="pill pill--soft">About</span>
-          <h2 class="section__title">About Jarvis One</h2>
+          <h2 class="section__title">About VibeSpace</h2>
           <p>
-            Jarvis One is a desktop AI assistant designed to bring chat, voice, local
+            VibeSpace is a desktop AI assistant designed to bring chat, voice, local
             models, plugins, and automation into one clean workspace. It is built for
             creators, developers, entrepreneurs, and power users who want one assistant
             that can help manage projects, code, research, reminders, and daily workflows.
@@ -388,12 +411,12 @@
             device by default. Cloud features are opt-in, and you bring your own model keys.
           </p>
           <div class="about__stats">
-            <div class="stat"><span class="stat__num grad-text">21+</span><span class="stat__label">model providers</span></div>
-            <div class="stat"><span class="stat__num grad-text">1</span><span class="stat__label">calm workspace</span></div>
-            <div class="stat"><span class="stat__num grad-text">3</span><span class="stat__label">platforms supported</span></div>
+            <div class="stat"><span class="stat__num grad-text" data-count="21" data-suffix="+">0</span><span class="stat__label">model providers</span></div>
+            <div class="stat"><span class="stat__num grad-text" data-count="1">0</span><span class="stat__label">calm workspace</span></div>
+            <div class="stat"><span class="stat__num grad-text" data-count="3">0</span><span class="stat__label">platforms supported</span></div>
           </div>
         </div>
-        <div class="about__panel glass">
+        <div class="about__panel glass" data-tilt>
           <h3 class="about__panel-title">What lives inside</h3>
           <ul class="ticks">
             <li>AI chat with multi-thread conversations</li>
@@ -408,12 +431,40 @@
       </div>
     </section>
 
+    <!-- ========================= TESTIMONIALS ========================= -->
+    <section class="section" id="voices">
+      <div class="section__head reveal">
+        <span class="pill pill--soft">Early voices</span>
+        <h2 class="section__title">Made for builders who context-switch all day</h2>
+        <!-- NOTE: placeholder quotes — replace with real testimonials before launch. -->
+        <p class="section__lead">Placeholder quotes shown below — swap them for real ones whenever you’re ready.</p>
+      </div>
+
+      <div class="grid grid--quotes stagger">
+        <figure class="card quote reveal" data-tilt>
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <blockquote>One calm window instead of seven AI tabs. VibeSpace is where my day starts now.</blockquote>
+          <figcaption><span class="quote__avatar">◆</span> Early tester <span class="quote__tag">placeholder</span></figcaption>
+        </figure>
+        <figure class="card quote reveal" data-tilt>
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <blockquote>Local models plus voice in the same place finally made my private workflow click.</blockquote>
+          <figcaption><span class="quote__avatar">◆</span> Indie developer <span class="quote__tag">placeholder</span></figcaption>
+        </figure>
+        <figure class="card quote reveal" data-tilt>
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <blockquote>It scheduled a reminder call and drafted my launch checklist before my coffee cooled.</blockquote>
+          <figcaption><span class="quote__avatar">◆</span> Solo founder <span class="quote__tag">placeholder</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
     <!-- ========================== DOWNLOAD ========================== -->
     <section class="section" id="download">
       <div class="download glass reveal">
         <div class="download__head">
           <span class="pill pill--soft">Download</span>
-          <h2 class="section__title">Download Jarvis One</h2>
+          <h2 class="section__title">Download VibeSpace</h2>
           <p class="section__lead">Start building with your personal AI command center.</p>
         </div>
 
@@ -423,7 +474,7 @@
           <!--  Replace the href below with your latest release URL.         -->
           <!--  Current real link (v0.1.28 Windows x64):                     -->
           <!-- ============================================================= -->
-          <a class="btn btn--primary btn--lg" href="https://github.com/Cookie774-GameDev/Jarivs-One/releases/download/v0.1.28/Jarvis-One-0.1.28-Windows-x64.exe">
+          <a class="btn btn--primary btn--lg magnetic" href="https://github.com/Cookie774-GameDev/Jarivs-One/releases/download/v0.1.28/Jarvis-One-0.1.28-Windows-x64.exe">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Download for Windows
           </a>
@@ -436,26 +487,10 @@
         <p class="download__meta muted">Latest: v0.1.28 · Windows 10/11 · macOS &amp; Linux builds via the setup guide</p>
 
         <div class="grid grid--reqs">
-          <div class="req">
-            <span class="req__icon">🪟</span>
-            <span class="req__title">Windows 10/11</span>
-            <span class="req__sub muted">64-bit desktop install</span>
-          </div>
-          <div class="req">
-            <span class="req__icon">🌐</span>
-            <span class="req__title">Internet connection</span>
-            <span class="req__sub muted">for cloud AI providers</span>
-          </div>
-          <div class="req">
-            <span class="req__icon">🧠</span>
-            <span class="req__title">Optional local models</span>
-            <span class="req__sub muted">e.g. Ollama for offline use</span>
-          </div>
-          <div class="req">
-            <span class="req__icon">🎙️</span>
-            <span class="req__title">Microphone</span>
-            <span class="req__sub muted">for voice features</span>
-          </div>
+          <div class="req"><span class="req__icon">🪟</span><span class="req__title">Windows 10/11</span><span class="req__sub muted">64-bit desktop install</span></div>
+          <div class="req"><span class="req__icon">🌐</span><span class="req__title">Internet connection</span><span class="req__sub muted">for cloud AI providers</span></div>
+          <div class="req"><span class="req__icon">🧠</span><span class="req__title">Optional local models</span><span class="req__sub muted">e.g. Ollama for offline use</span></div>
+          <div class="req"><span class="req__icon">🎙️</span><span class="req__title">Microphone</span><span class="req__sub muted">for voice features</span></div>
         </div>
       </div>
     </section>
@@ -469,24 +504,24 @@
 
       <div class="faq reveal">
         <details class="faq__item">
-          <summary>Is Jarvis One free?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <summary>Is VibeSpace free?<span class="faq__chev" aria-hidden="true">+</span></summary>
           <p>Pricing and availability may vary by release. The download section will always show the latest option.</p>
         </details>
         <details class="faq__item">
-          <summary>Does Jarvis One support voice?<span class="faq__chev" aria-hidden="true">+</span></summary>
-          <p>Yes, Jarvis One is designed to support voice interaction where configured.</p>
+          <summary>Does VibeSpace support voice?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>Yes, VibeSpace is designed to support voice interaction where configured.</p>
         </details>
         <details class="faq__item">
-          <summary>Can Jarvis One use local models?<span class="faq__chev" aria-hidden="true">+</span></summary>
-          <p>Jarvis One can support compatible local model providers depending on your setup.</p>
+          <summary>Can VibeSpace use local models?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>VibeSpace can support compatible local model providers depending on your setup.</p>
         </details>
         <details class="faq__item">
           <summary>Is this connected to VibeVerseOS?<span class="faq__chev" aria-hidden="true">+</span></summary>
-          <p>Yes, VibeVerseOS is the web home and ecosystem around Jarvis One.</p>
+          <p>Yes, VibeVerseOS is the web home and ecosystem around VibeSpace.</p>
         </details>
         <details class="faq__item">
-          <summary>Can Jarvis call or message me?<span class="faq__chev" aria-hidden="true">+</span></summary>
-          <p>Jarvis One is being designed with call and message workflows for reminders, notifications, and assistant interactions.</p>
+          <summary>Can VibeSpace call or message me?<span class="faq__chev" aria-hidden="true">+</span></summary>
+          <p>VibeSpace is being designed with call and message workflows for reminders, notifications, and assistant interactions.</p>
         </details>
       </div>
     </section>
@@ -505,8 +540,7 @@
         </div>
 
         <form class="contact__form glass" id="contactForm" novalidate>
-          <!-- BACKEND: this form is front-end only. To make it live, POST these fields
-               to your endpoint (e.g. a Supabase Edge Function, Formspree, or your API)
+          <!-- BACKEND: front-end only. To make it live, POST these fields to your endpoint
                inside script.js → handleContactSubmit(). -->
           <div class="field">
             <label for="cName">Name</label>
@@ -518,7 +552,7 @@
           </div>
           <div class="field">
             <label for="cMessage">Message</label>
-            <textarea id="cMessage" name="message" rows="4" placeholder="How can Jarvis help?" required></textarea>
+            <textarea id="cMessage" name="message" rows="4" placeholder="How can VibeSpace help?" required></textarea>
           </div>
           <button type="submit" class="btn btn--primary btn--lg contact__submit">Send message</button>
           <p class="contact__success" id="contactSuccess" hidden>Thanks — your message is ready to be connected to the backend.</p>
@@ -535,15 +569,15 @@
           <svg viewBox="0 0 64 64" width="30" height="30" fill="none">
             <defs>
               <linearGradient id="footMark" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#a855f7" /><stop offset="55%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#60a5fa" />
+                <stop offset="0%" stop-color="#b98cff" /><stop offset="60%" stop-color="#8b5cf6" /><stop offset="100%" stop-color="#e8a87c" />
               </linearGradient>
             </defs>
-            <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#footMark)" />
-            <path d="M40 16 L40 38 a10 10 0 0 1 -20 0" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#footMark)" />
+            <path d="M22 22 L32 42 L42 22" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
           </svg>
         </span>
         <div>
-          <p class="footer__name">Jarvis One</p>
+          <p class="footer__name">VibeSpace</p>
           <p class="footer__by muted">by VibeVerseOS · <a href="https://vibeverseos.com">vibeverseos.com</a></p>
         </div>
       </div>
@@ -551,6 +585,7 @@
       <nav class="footer__links" aria-label="Footer">
         <a href="#home">Home</a>
         <a href="#features">Features</a>
+        <a href="#how">How it works</a>
         <a href="#demo">Demo</a>
         <a href="#download">Download</a>
         <a href="#contact">Contact</a>
@@ -558,12 +593,11 @@
     </div>
 
     <div class="footer__legal">
-      <p class="muted">Jarvis One is an independent AI assistant platform. Product features may vary by version and provider configuration.</p>
+      <p class="muted">VibeSpace is an independent AI assistant platform. Product features may vary by version and provider configuration.</p>
       <p class="muted">© <span id="year"></span> VibeVerseOS. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Toast for small confirmations -->
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
   <script src="script.js" defer></script>

@@ -1,33 +1,30 @@
 /* ============================================================================
-   Jarvis One — vibeverseos.com landing interactions
+   VibeSpace — vibeverseos.com landing interactions
    Plain vanilla JS, no frameworks. Loaded with `defer`.
-   Modules: nav, scroll-reveal, active-link, video switcher, chat demo,
-            contact form, footer year, toast helper.
+   Modules: nav · scroll progress · cursor glow · scroll-reveal (staggered)
+            · active-link · orb parallax · card tilt+spotlight · count-up
+            · magnetic buttons · video switcher · chat demo · contact form
    ========================================================================== */
 (function () {
   'use strict';
 
-  /* Small helpers */
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer    = window.matchMedia('(pointer:fine)').matches;
+  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 
-  /* ---------------------------------------------------------------------- */
-  /*  Footer year                                                           */
-  /* ---------------------------------------------------------------------- */
+  /* ----------------------------- Footer year ---------------------------- */
   const yearEl = $('#year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------------------------------------------------------------------- */
-  /*  Toast helper                                                          */
-  /* ---------------------------------------------------------------------- */
+  /* ------------------------------- Toast --------------------------------- */
   const toastEl = $('#toast');
   let toastTimer;
   function toast(message) {
     if (!toastEl) return;
     toastEl.textContent = message;
     toastEl.hidden = false;
-    // force reflow so the transition runs even on rapid calls
     void toastEl.offsetWidth;
     toastEl.classList.add('is-visible');
     clearTimeout(toastTimer);
@@ -37,19 +34,10 @@
     }, 2600);
   }
 
-  /* ---------------------------------------------------------------------- */
-  /*  Navbar: scroll state, mobile toggle, smooth-close on click            */
-  /* ---------------------------------------------------------------------- */
-  const nav        = $('.nav');
-  const navToggle  = $('#navToggle');
-  const navLinks   = $('#navLinks');
-
-  const onScroll = () => {
-    if (!nav) return;
-    nav.classList.toggle('is-scrolled', window.scrollY > 12);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  /* --------------------------- Navbar behavior --------------------------- */
+  const nav       = $('.nav');
+  const navToggle = $('#navToggle');
+  const navLinks  = $('#navLinks');
 
   function closeMenu() {
     if (!navLinks || !navToggle) return;
@@ -63,15 +51,11 @@
     navToggle.setAttribute('aria-expanded', 'true');
     navToggle.setAttribute('aria-label', 'Close menu');
   }
-
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
-      const open = navLinks.classList.contains('is-open');
-      open ? closeMenu() : openMenu();
+      navLinks.classList.contains('is-open') ? closeMenu() : openMenu();
     });
-    // close the mobile menu after tapping any link
     $$('#navLinks a').forEach((a) => a.addEventListener('click', closeMenu));
-    // close on Escape / outside click
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
     document.addEventListener('click', (e) => {
       if (!navLinks.classList.contains('is-open')) return;
@@ -79,10 +63,71 @@
     });
   }
 
-  /* ---------------------------------------------------------------------- */
-  /*  Scroll-reveal animations                                              */
-  /* ---------------------------------------------------------------------- */
+  /* --------------------- Scroll progress + nav state + parallax ---------- */
+  const progressBar = $('#scrollProgress');
+  const orbs = $$('.orb[data-parallax]');
+
+  let ticking = false;
+  function onScrollFrame() {
+    const y = window.scrollY || window.pageYOffset;
+
+    // sticky nav shade
+    if (nav) nav.classList.toggle('is-scrolled', y > 12);
+
+    // top progress bar
+    if (progressBar) {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      const p = docH > 0 ? clamp(y / docH, 0, 1) : 0;
+      progressBar.style.transform = `scaleX(${p})`;
+    }
+
+    // subtle orb parallax
+    if (!prefersReduced) {
+      for (const orb of orbs) {
+        const factor = parseFloat(orb.getAttribute('data-parallax')) || 0.05;
+        orb.style.transform = `translateY(${y * factor}px)`;
+      }
+    }
+    ticking = false;
+  }
+  function requestScroll() {
+    if (!ticking) { window.requestAnimationFrame(onScrollFrame); ticking = true; }
+  }
+  onScrollFrame();
+  window.addEventListener('scroll', requestScroll, { passive: true });
+  window.addEventListener('resize', requestScroll, { passive: true });
+
+  /* ---------------------- Cursor-following spotlight --------------------- */
+  const cursorGlow = $('#cursorGlow');
+  if (cursorGlow && finePointer && !prefersReduced) {
+    let gx = window.innerWidth / 2, gy = window.innerHeight / 2;  // target
+    let cx = gx, cy = gy;                                         // current (eased)
+    let raf = null;
+    const render = () => {
+      cx += (gx - cx) * 0.16;
+      cy += (gy - cy) * 0.16;
+      cursorGlow.style.transform = `translate(${cx}px, ${cy}px)`;
+      if (Math.abs(gx - cx) > 0.5 || Math.abs(gy - cy) > 0.5) {
+        raf = requestAnimationFrame(render);
+      } else { raf = null; }
+    };
+    window.addEventListener('mousemove', (e) => {
+      gx = e.clientX; gy = e.clientY;
+      cursorGlow.classList.add('is-active');
+      if (!raf) raf = requestAnimationFrame(render);
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => cursorGlow.classList.remove('is-active'));
+  }
+
+  /* ------------------- Scroll-reveal (with stagger groups) --------------- */
   const revealEls = $$('.reveal');
+  // Pre-compute a stagger delay for children of any `.stagger` container.
+  $$('.stagger').forEach((group) => {
+    $$('.reveal', group).forEach((child, i) => {
+      child.style.transitionDelay = `${Math.min(i * 90, 450)}ms`;
+    });
+  });
+
   if (prefersReduced || !('IntersectionObserver' in window)) {
     revealEls.forEach((el) => el.classList.add('is-visible'));
   } else {
@@ -97,12 +142,9 @@
     revealEls.forEach((el) => revealObserver.observe(el));
   }
 
-  /* ---------------------------------------------------------------------- */
-  /*  Active nav link highlighting via section visibility                   */
-  /* ---------------------------------------------------------------------- */
-  const sections = ['home', 'features', 'demo', 'chat', 'about', 'download', 'faq', 'contact']
-    .map((id) => document.getElementById(id))
-    .filter(Boolean);
+  /* ------------------------- Active nav highlight ------------------------ */
+  const sectionIds = ['home', 'features', 'how', 'demo', 'chat', 'about', 'voices', 'download', 'faq', 'contact'];
+  const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
   const linkFor = (id) => $(`#navLinks a[href="#${id}"]`);
 
   if ('IntersectionObserver' in window && sections.length) {
@@ -118,9 +160,69 @@
     sections.forEach((s) => navObserver.observe(s));
   }
 
-  /* ---------------------------------------------------------------------- */
-  /*  Demo video switcher (+ graceful fallback when a file is missing)      */
-  /* ---------------------------------------------------------------------- */
+  /* --------------------- Card tilt + mouse spotlight --------------------- */
+  if (finePointer && !prefersReduced) {
+    $$('[data-tilt]').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        // spotlight position (CSS vars consumed by ::before)
+        card.style.setProperty('--mx', `${px * 100}%`);
+        card.style.setProperty('--my', `${py * 100}%`);
+        // gentle tilt
+        const rx = (0.5 - py) * 6;
+        const ry = (px - 0.5) * 6;
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+  }
+
+  /* ----------------------- Magnetic primary buttons ---------------------- */
+  if (finePointer && !prefersReduced) {
+    $$('.magnetic').forEach((btn) => {
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const mx = e.clientX - r.left - r.width / 2;
+        const my = e.clientY - r.top - r.height / 2;
+        btn.style.transform = `translate(${mx * 0.18}px, ${my * 0.28}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+  }
+
+  /* --------------------------- Count-up stats ---------------------------- */
+  function countUp(el) {
+    const target = parseFloat(el.getAttribute('data-count')) || 0;
+    const suffix = el.getAttribute('data-suffix') || '';
+    if (prefersReduced) { el.textContent = target + suffix; return; }
+    const dur = 1100;
+    const start = performance.now();
+    const step = (now) => {
+      const t = clamp((now - start) / dur, 0, 1);
+      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      el.textContent = Math.round(target * eased) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    };
+    requestAnimationFrame(step);
+  }
+  const counters = $$('[data-count]');
+  if (counters.length) {
+    if (!('IntersectionObserver' in window)) {
+      counters.forEach(countUp);
+    } else {
+      const countObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) { countUp(entry.target); obs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.6 });
+      counters.forEach((c) => countObserver.observe(c));
+    }
+  }
+
+  /* --------------------------- Video switcher ---------------------------- */
   const featuredVideo  = $('#featuredVideo');
   const featuredSource = $('#featuredSource');
   const videoCaption   = $('#videoCaption');
@@ -139,51 +241,34 @@
     featuredVideo.style.display = '';
     videoFallback.hidden = true;
   }
-
   if (featuredVideo) {
-    // If the source 404s / can't load, swap to the friendly fallback panel.
     featuredVideo.addEventListener('error', () => {
       showFallback(featuredSource ? featuredSource.getAttribute('src') : '');
     }, true);
-    // The <source> element fires its own error too.
     if (featuredSource) {
-      featuredSource.addEventListener('error', () => {
-        showFallback(featuredSource.getAttribute('src'));
-      });
+      featuredSource.addEventListener('error', () => showFallback(featuredSource.getAttribute('src')));
     }
   }
-
   function switchVideo(thumb) {
     if (!featuredVideo || !featuredSource) return;
     const src   = thumb.getAttribute('data-src');
-    const title = thumb.getAttribute('data-title') || 'Jarvis One demo';
-
+    const title = thumb.getAttribute('data-title') || 'VibeSpace demo';
     thumbs.forEach((t) => t.classList.remove('is-active'));
     thumb.classList.add('is-active');
-
     hideFallback();
     featuredSource.setAttribute('src', src);
-    featuredVideo.load(); // re-evaluate the new source
+    featuredVideo.load();
     if (videoCaption) videoCaption.textContent = title.replace(/&amp;/g, '&');
-
-    // Try to play; ignore promise rejection (e.g., autoplay policies / missing file)
-    featuredVideo.play().catch(() => { /* user can press play; no-op */ });
+    featuredVideo.play().catch(() => { /* missing file / autoplay policy: no-op */ });
   }
+  thumbs.forEach((thumb) => thumb.addEventListener('click', () => switchVideo(thumb)));
 
-  thumbs.forEach((thumb) => {
-    thumb.addEventListener('click', () => switchVideo(thumb));
-  });
-
-  /* ---------------------------------------------------------------------- */
-  /*  Interactive Jarvis chat demo (front-end mock, no backend)             */
-  /* ---------------------------------------------------------------------- */
-  const chatLog   = $('#chatLog');
-  const chatForm  = $('#chatForm');
-  const chatField = $('#chatField');
+  /* --------------------- Interactive VibeSpace chat ---------------------- */
+  const chatLog     = $('#chatLog');
+  const chatForm    = $('#chatForm');
+  const chatField   = $('#chatField');
   const suggestWrap = $('#chatSuggest');
 
-  // Pre-written responses. Keys are matched case-insensitively against the
-  // suggested-prompt text; free-typed messages fall back to keyword matching.
   const SCRIPTED = {
     'call me at 3:00 am':
       "I can schedule a call reminder, but I'll make sure it's intentional before waking you up at 3:00 AM.",
@@ -193,11 +278,10 @@
       "Local model support lets you connect compatible local providers for private, offline-friendly workflows.",
     'message me a reminder':
       "Messaging can be used for reminders, updates, and assistant-triggered notifications.",
-    'explain jarvis one':
-      "Jarvis One is designed to be your AI command center across chat, voice, tools, and automation.",
+    'explain vibespace':
+      "VibeSpace is designed to be your AI command center across chat, voice, tools, and automation.",
   };
 
-  // Keyword fallback for anything typed freely.
   function keywordReply(text) {
     const t = text.toLowerCase();
     if (/(call|phone|ring|wake)/.test(t))
@@ -215,10 +299,9 @@
     if (/(price|cost|free|pay|subscri)/.test(t))
       return "Pricing and availability vary by release — the download section always shows the latest option.";
     if (/(hi|hello|hey|yo)\b/.test(t))
-      return "Hey! I'm Jarvis. Ask me about chat, voice, local models, plugins, or launching your next project.";
-    return "I'm a quick demo of Jarvis One. Try a suggested prompt, or download the app to do this for real across chat, voice, and automation.";
+      return "Hey! I'm VibeSpace. Ask me about chat, voice, local models, plugins, or launching your next project.";
+    return "I'm a quick demo of VibeSpace. Try a suggested prompt, or download the app to do this for real across chat, voice, and automation.";
   }
-
   function replyFor(text) {
     const key = text.trim().toLowerCase();
     return SCRIPTED[key] || keywordReply(text);
@@ -231,7 +314,7 @@
     if (who === 'ai') {
       const label = document.createElement('span');
       label.className = 'msg__who';
-      label.textContent = 'Jarvis';
+      label.textContent = 'VibeSpace';
       msg.appendChild(label);
     }
     msg.appendChild(document.createTextNode(text));
@@ -239,25 +322,23 @@
     chatLog.scrollTop = chatLog.scrollHeight;
     return msg;
   }
-
   function showTyping() {
     if (!chatLog) return null;
     const t = document.createElement('div');
     t.className = 'msg msg--ai typing';
     t.innerHTML = '<i></i><i></i><i></i>';
-    t.setAttribute('aria-label', 'Jarvis is typing');
+    t.setAttribute('aria-label', 'VibeSpace is typing');
     chatLog.appendChild(t);
     chatLog.scrollTop = chatLog.scrollHeight;
     return t;
   }
 
   let chatBusy = false;
-  function jarvisRespond(userText) {
+  function vibeRespond(userText) {
     if (!chatLog) return;
     chatBusy = true;
     const typingEl = showTyping();
     const reply = replyFor(userText);
-    // Typing time scales gently with reply length, capped for snappiness.
     const delay = prefersReduced ? 250 : Math.min(1500, 550 + reply.length * 12);
     setTimeout(() => {
       if (typingEl) typingEl.remove();
@@ -265,15 +346,13 @@
       chatBusy = false;
     }, delay);
   }
-
   function sendUserMessage(text) {
     const clean = (text || '').trim();
     if (!clean || chatBusy) return;
     addMessage(clean, 'me');
-    jarvisRespond(clean);
+    vibeRespond(clean);
   }
 
-  // Preload the opening conversation.
   function seedChat() {
     if (!chatLog) return;
     addMessage('Welcome back. I’m online and ready.', 'ai');
@@ -293,59 +372,30 @@
       chatField.focus();
     });
   }
-
   if (suggestWrap) {
     $$('.suggest', suggestWrap).forEach((btn) => {
-      btn.addEventListener('click', () => {
-        sendUserMessage(btn.getAttribute('data-prompt') || btn.textContent);
-      });
+      btn.addEventListener('click', () => sendUserMessage(btn.getAttribute('data-prompt') || btn.textContent));
     });
   }
 
-  /* ---------------------------------------------------------------------- */
-  /*  Contact form — front-end success state                                */
-  /*  BACKEND: replace the body of handleContactSubmit() with a fetch()     */
-  /*  POST to your endpoint (Supabase Edge Function, Formspree, etc.).      */
-  /* ---------------------------------------------------------------------- */
+  /* ------------------------- Contact form (mock) ------------------------- */
+  /* BACKEND: replace the demo block with a fetch() POST to your endpoint.   */
   const contactForm    = $('#contactForm');
   const contactSuccess = $('#contactSuccess');
 
   function handleContactSubmit(e) {
     e.preventDefault();
-    if (!contactForm.checkValidity()) {
-      contactForm.reportValidity();
-      return;
-    }
-    // --- Begin demo behavior (swap for a real request when ready) ---
+    if (!contactForm.checkValidity()) { contactForm.reportValidity(); return; }
+    // --- demo behavior ---
     if (contactSuccess) contactSuccess.hidden = false;
     toast('Message captured ✓');
     contactForm.reset();
-    // --- End demo behavior ---
+    // --- end demo behavior ---
   }
-
   if (contactForm) {
     contactForm.addEventListener('submit', handleContactSubmit);
-    // Hide the success note again as soon as the user starts editing.
     contactForm.addEventListener('input', () => {
       if (contactSuccess && !contactSuccess.hidden) contactSuccess.hidden = true;
-    });
-  }
-
-  /* ---------------------------------------------------------------------- */
-  /*  Subtle parallax on the hero mockup (pointer-driven, desktop only)     */
-  /* ---------------------------------------------------------------------- */
-  const heroVisual = $('.hero__visual');
-  const mockup = $('.mockup');
-  if (heroVisual && mockup && !prefersReduced && window.matchMedia('(pointer:fine)').matches) {
-    heroVisual.addEventListener('mousemove', (e) => {
-      const r = heroVisual.getBoundingClientRect();
-      const dx = (e.clientX - r.left) / r.width - 0.5;
-      const dy = (e.clientY - r.top) / r.height - 0.5;
-      mockup.style.transform =
-        `perspective(1400px) rotateY(${-7 + dx * 6}deg) rotateX(${3 - dy * 6}deg)`;
-    });
-    heroVisual.addEventListener('mouseleave', () => {
-      mockup.style.transform = '';
     });
   }
 })();
