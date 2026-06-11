@@ -307,7 +307,9 @@ code {
 [data-tilt] { transform-style: preserve-3d; will-change: transform; }
 [data-tilt]::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(206,188,230,0.16), transparent 45%);
+  background:
+    radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,0.16), transparent 42%),
+    radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), rgba(185,140,255,0.12), transparent 56%);
   transition: opacity 0.35s ease;
 }
 [data-tilt]:hover::before { opacity: 1; }
@@ -676,4 +678,52 @@ code {
 @media (max-width: 980px) {
   .connect { grid-template-columns: 1fr; }
   .phone-stage { order: -1; }
+}
+
+/* ------------------------- 23) Liquid glass ----------------------------- */
+/* Frosted, light-reactive surfaces: a soft top specular rim at rest, plus a
+   diagonal glare that sweeps across on hover. Uses ::after only, so it never
+   fights existing shadows or the tilt ::before. Calm and crafted on purpose. */
+.glass { backdrop-filter: blur(26px) saturate(150%); -webkit-backdrop-filter: blur(26px) saturate(150%); }
+
+.mockup, .card, .step, .connect__item, .chat, .about__panel,
+.download, .contact__form, .phone, .faq__item, .video__stage { position: relative; }
+
+.mockup::after, .card::after, .step::after, .connect__item::after, .chat::after,
+.about__panel::after, .download::after, .contact__form::after, .phone::after,
+.faq__item::after, .video__stage::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0) 34%),
+    linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.12) 47%, transparent 56%);
+  background-size: 100% 100%, 220% 100%;
+  background-position: 0 0, -60% 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.18);
+  mix-blend-mode: screen; opacity: 0.85;
+  transition: background-position 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.mockup:hover::after, .card:hover::after, .step:hover::after, .connect__item:hover::after,
+.chat:hover::after, .about__panel:hover::after, .download:hover::after, .contact__form:hover::after,
+.phone:hover::after, .faq__item:hover::after, .video__stage:hover::after {
+  background-position: 0 0, 160% 0;
+}
+
+/* glossy "liquid" primary buttons */
+.btn--primary { overflow: hidden; }
+.btn--primary::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0) 46%);
+  mix-blend-mode: screen; opacity: 0.55;
+}
+
+/* frostier, brighter-edged navbar once you start scrolling */
+.nav.is-scrolled {
+  backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 10px 30px rgba(10,6,20,0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mockup::after, .card::after, .step::after, .connect__item::after, .chat::after,
+  .about__panel::after, .download::after, .contact__form::after, .phone::after,
+  .faq__item::after, .video__stage::after { transition: none; }
 }
