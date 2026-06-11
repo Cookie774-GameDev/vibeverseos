@@ -727,3 +727,17 @@ code {
   .about__panel::after, .download::after, .contact__form::after, .phone::after,
   .faq__item::after, .video__stage::after { transition: none; }
 }
+
+
+/* ------------------------- 24) Crafted line icons ----------------------- */
+.svg-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ico {
+  width: 1.15em; height: 1.15em; display: inline-block; vertical-align: -0.18em;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none;
+}
+.feature__icon .ico, .connect__icon .ico { width: 1.6rem; height: 1.6rem; }
+.req__icon .ico { width: 1.7rem; height: 1.7rem; }
+.video__fallback-icon .ico { width: 2.2rem; height: 2.2rem; }
+.chip .ico, .strip__inner .ico, .rail__item .ico,
+.install__tab .ico, .phone__chip .ico { width: 1.05em; height: 1.05em; vertical-align: -0.16em; margin-right: 0.1em; }
+.feature__icon, .connect__icon, .req__icon, .video__fallback-icon { color: var(--primary-2); }
